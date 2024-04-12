@@ -25,6 +25,7 @@ const config: Config = {
       white: '#FFFFFF',
       gray: '#E3EAEF',
       border: '#D8DFE6',
+      dark_gray: '#77818C',
       // TODO: implement "warning" & "info" colors.
     },
   },
