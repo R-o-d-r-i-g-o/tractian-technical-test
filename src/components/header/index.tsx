@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import Link from 'next/link';
 import Image from 'next/image';
 
 import navOptions from '../../../public/mock/header-options.json'
@@ -6,14 +7,16 @@ import navOptions from '../../../public/mock/header-options.json'
 type NavOption = {
   text: string;
   icon: string;
+  href: string;
+  alt: string;
 };
 
-const NavButton: FC<NavOption> = ({ text, icon }) => (
-  <button className='flex flex-grow items-center justify-around bg-secondary py-[2px] px-[4px]'>
-    <Image src={icon} alt='unit-simble' height={12} width={12} />
+const NavButton: FC<NavOption> = ({ text, icon, href, alt }) => (
+  <Link href={href} className='flex flex-grow items-center justify-around bg-secondary py-[2px] px-[4px] rounded-sm hover:bg-selection active:bg-selection'>
+    <Image src={icon} alt={alt} height={12} width={12} />
     {text}
-  </button>
-)
+  </Link>
+);
 
 const Header = () => (
   <header className="bg-primary flex items-center justify-between px-4 h-[42px]">

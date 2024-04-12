@@ -1,14 +1,20 @@
 [
   {
     "text": "Apex Unit",
-    "icon": "/icons/units.svg"
+    "icon": "/icons/units.svg",
+    "href": "#",
+    "alt": "apex-units"
   },
   {
     "text": "Tobias Unit",
-    "icon": "/icons/units.svg"
+    "icon": "/icons/units.svg",
+    "href": "#",
+    "alt": "tobias-units"
   },
   {
     "text": "jaguar Unit",
-    "icon": "/icons/units.svg"
+    "icon": "/icons/units.svg",
+    "href": "#",
+    "alt": "jaguar-units"
   }
 ]
