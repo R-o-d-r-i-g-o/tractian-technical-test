@@ -31,7 +31,7 @@ const Collaborators: FC<Props> = ({ users, maxShowing = 5, alignRight = false })
         src={photo ?? ""}
         title={email}
       >
-        {name && name.length > 1 ? name[0] : ""}
+        {name && name.length > 1 && name[0]}
       </Avatar>
     )}
   </AvatarGroup>

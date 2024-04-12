@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Props) => (
   <html lang="br">
     <body className={inter.className}>
-      <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+      <AppRouterCacheProvider>
         {children}
       </AppRouterCacheProvider>
     </body>

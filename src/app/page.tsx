@@ -112,10 +112,10 @@ const Home = () => (
                 Motor Elétrico (Trifásico)
               </div>
               <hr className='text-gray h-px mt-4 mb-6' />
-              <span className="font-semibold text-base">
+              <span className="block font-semibold text-base mb-2">
                 Reponsáveis
               </span>
-              <Collaborators users={mockCollaborators} />
+              <Collaborators alignRight users={mockCollaborators} />
             </div>
           </div>
           <hr className='text-gray h-px mt-4 mb-6' />
