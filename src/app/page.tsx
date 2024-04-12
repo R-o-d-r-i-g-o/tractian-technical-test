@@ -37,7 +37,7 @@ const Home = () => (
         / Apex Unit
       </span>
       <div className="flex gap-2">
-        {mockButtons.map((item) => <Button {...item}/>)}
+        {mockButtons.map((item, i) => <Button key={i} {...item}/>)}
       </div>
     </div>
     <div className="flex h-[504px] gap-2 text-sm text-primary border-collapse">
