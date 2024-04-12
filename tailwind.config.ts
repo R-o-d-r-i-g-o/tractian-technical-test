@@ -22,8 +22,10 @@ const config: Config = {
       accent: '#ffc107',
       success: '#52C41A',
       danger: '#ED3833',
+      white: '#FFFFFF',
       gray: '#E3EAEF',
-      // TODO: implemente "warning" & "info" colors.
+      border: '#D8DFE6',
+      // TODO: implement "warning" & "info" colors.
     },
   },
   plugins: [],
