@@ -4,6 +4,9 @@ import Image from "next/image";
 import ApexAssets from '../../public/mock/apex-unit/assets.json'
 import ApexLocations from '../../public/mock/apex-unit/locations.json'
 
+import Avatar from '@mui/material/Avatar';
+import AvatarGroup from '@mui/material/AvatarGroup';
+
 import { GoDotFill } from "react-icons/go";
 import { IoSearchOutline } from "react-icons/io5";
 
@@ -20,6 +23,39 @@ const mockButtons = [
   {
     lable: "Crítico",
     icon: "/icons/info.svg"
+  }
+]
+
+const mockCollaborators = [
+  {
+    name: "Remy Sharp",
+    email: "remy@gmail.com",
+    photo: "https://avatars.githubusercontent.com/u/89111957?v=4"
+  },
+  {
+    name: "Travis Howard",
+    email: "travis@gmail.com",
+    photo: "https://avatars.githubusercontent.com/u/89111970?v=4"
+  },
+  {
+    name: "",
+    email: "cindy@gmail.com",
+    photo: null
+  },
+  {
+    name: "Trevor Henderson",
+    email: "trevor@gmail.com",
+    photo: null
+  },
+  {
+    name: "Trevor Henderson",
+    email: "remy@gmail.com",
+    photo: null
+  },
+  {
+    name: "Trevor Henderson",
+    email: "remy@gmail.com",
+    photo: null
   }
 ]
 
@@ -58,8 +94,64 @@ const Home = () => (
           Motor Rt Coal AF01
           <GoDotFill size={16} className="mr-4 text-success" />
         </div>
-        <div className="w-full min-h-min">
-
+        <div className="w-full min-h-min p-5">
+          <div className='flex gap-4'>
+            <div className='w-1/2'>
+              <Image
+                src="https://s3-alpha-sig.figma.com/img/324a/327b/49e2fd18b176b9e2ef843bdfef57629f?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RAuFBy0lakmPqiqarb8tZPhF9GNiR77qwmRB7VEWVAdOnCJ1qNb6qxBsoXfQCds4sRx9mQ36XousSz1FOyxQ9lx-mGKAW1HDck6wnk-GDhuX5pLIXrDX-eAEMgaDkU-372PigWQlRe0TACDCN1d1IDVd0KPpyuU~e8j8nu-DiC01qqUuKU85zbFd77jh4ZvN2jv02j38ocYcMkL9eWLP1nGuwXlZOg327BLrImWQaj87vfG8uaRXv99cDEBsVuO-03JAx1bFtfIZ-mHnHuC6L11IXD3COUTFvB3uEnwYEMo0arfERktY1EunLQnRSfINkZHEoGMtbQRgOjm6~eMjFg"
+                alt="equipament-frame"
+                className="rounded-lg h-[226px]"
+                height={226}
+                width={336}
+              />
+            </div>
+            <div className='w-1/2 pt-12 font-normal leading-6'>
+              <span className="font-semibold text-base">
+                Tipo de Equipamento
+              </span>
+              <div className='text-dark_gray'>
+                Motor Elétrico (Trifásico)
+              </div>
+              <hr className='text-gray h-px mt-4 mb-6' />
+              <span className="font-semibold text-base">
+                Reponsáveis
+              </span>
+              <AvatarGroup className="justify-end mt-2" max={5}>
+                {mockCollaborators.map(({ name, email, photo }, i) =>
+                  <Avatar
+                    sx={{ width: 32, height: 32 }}
+                    key={i}
+                    alt={name}
+                    src={photo ?? ""}
+                    title={email}
+                  >
+                    {name && name.length > 1 && name[0]}
+                  </Avatar>
+                )}
+              </AvatarGroup>
+            </div>
+          </div>
+          <hr className='text-gray h-px mt-4 mb-6' />
+          <div className='flex gap-4 font-normal leading-6'>
+            <div className='w-1/2' >
+              <span className="font-semibold text-base">
+                Sensor
+              </span>
+              <div className='flex gap-2 items-center text-dark_gray'>
+                <Image src="/icons/signal.svg" alt="receptor-icon" height={15} width={15}/>
+                HIO4510
+              </div>
+            </div>
+            <div className='w-1/2'>
+              <span className="font-semibold text-base">
+                Receptor
+              </span>
+              <div className='flex gap-2 items-center text-dark_gray'>
+                <Image src="/icons/receptor.svg" alt="receptor-icon" height={15} width={15}/>
+                EUH4R27
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
