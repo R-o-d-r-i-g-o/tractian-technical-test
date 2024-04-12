@@ -8,7 +8,7 @@ type Props = {
 const Template = ({ children }: Props) => (
   <div className='flex flex-col h-screen bg-gray'>
     <Header />
-    <main className='flex-1 w-[98.8%] mx-auto my-2 bg-white border-2 border-border rounded-[5px]'>
+    <main className='w-[98.8%] mx-auto my-2 p-4 bg-white border-2 border-border rounded-[5px]'>
       {children}
     </main>
   </div>

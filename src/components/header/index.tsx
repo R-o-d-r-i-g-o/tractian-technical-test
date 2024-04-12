@@ -19,7 +19,7 @@ const NavButton: FC<NavOption> = ({ text, icon, href, alt }) => (
 );
 
 const Header = () => (
-  <header className="bg-primary flex items-center justify-between px-4 h-[42px]">
+  <header className="bg-primary flex items-center justify-between px-4 py-3">
     <Image src='/tractian-logo.svg' alt='traction-logo' width={102.95} height={14}/>
     <div className='flex align-middle w-[300px] text-xs h-6 gap-[10px]'>
       {navOptions.map((item, i) => <NavButton key={i} {...item} />)}
