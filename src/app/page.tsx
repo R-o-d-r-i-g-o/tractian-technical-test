@@ -4,8 +4,7 @@ import Image from "next/image";
 import ApexAssets from '../../public/mock/apex-unit/assets.json'
 import ApexLocations from '../../public/mock/apex-unit/locations.json'
 
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
+import Collaborators from '@/components/collaborators'
 
 import { GoDotFill } from "react-icons/go";
 import { IoSearchOutline } from "react-icons/io5";
@@ -116,19 +115,7 @@ const Home = () => (
               <span className="font-semibold text-base">
                 Reponsáveis
               </span>
-              <AvatarGroup className="justify-end mt-2" max={5}>
-                {mockCollaborators.map(({ name, email, photo }, i) =>
-                  <Avatar
-                    sx={{ width: 32, height: 32 }}
-                    key={i}
-                    alt={name}
-                    src={photo ?? ""}
-                    title={email}
-                  >
-                    {name && name.length > 1 && name[0]}
-                  </Avatar>
-                )}
-              </AvatarGroup>
+              <Collaborators users={mockCollaborators} />
             </div>
           </div>
           <hr className='text-gray h-px mt-4 mb-6' />
