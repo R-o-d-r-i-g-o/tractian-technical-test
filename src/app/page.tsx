@@ -1,6 +1,9 @@
 import { FC } from "react";
 import Image from "next/image";
 
+import ApexAssets from '../../public/mock/apex-unit/assets.json'
+import ApexLocations from '../../public/mock/apex-unit/locations.json'
+
 import { GoDotFill } from "react-icons/go";
 import { IoSearchOutline } from "react-icons/io5";
 
@@ -41,21 +44,24 @@ const Home = () => (
       </div>
     </div>
     <div className="flex h-[504px] gap-2 text-sm text-primary border-collapse">
-      <div className="w-4/6 bg-gray-200 border border-border rounded">
-        <div className="bg-gray-200 h-11 border-b border-border flex items-center">
+      <div className="w-4/6 border border-border rounded overflow-y-auto">
+        <div className="h-11 border-b border-border flex items-center">
           <input type="text" placeholder="Buscar Ativo ou Local" className="py-2 px-3 flex-1 text-sm outline-none" />
           <IoSearchOutline size={16} className="mr-4" />
         </div>
-        Hello World 1
+        <div className="w-full min-h-min">
+
+        </div>
       </div>
       <div className="w-full bg-gray-300 border border-border rounded">
-        <div className="flex items-center p-4 gap-1 uppercase font-semibold bg-gray-200 border-b border-border text-lg leading-[18px]">
+        <div className="flex items-center p-4 gap-1 uppercase font-semibold border-b border-border text-lg leading-[18px]">
           Motor Rt Coal AF01
           <GoDotFill size={16} className="mr-4 text-success" />
         </div>
-        Hello World 2
-      </div>
+        <div className="w-full min-h-min">
 
+        </div>
+      </div>
     </div>
   </>
 );

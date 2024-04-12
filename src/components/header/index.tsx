@@ -12,7 +12,7 @@ type NavOption = {
 };
 
 const NavButton: FC<NavOption> = ({ text, icon, href, alt }) => (
-  <Link href={href} className='flex flex-grow items-center justify-around bg-secondary py-[2px] px-[4px] rounded-sm hover:bg-selection active:bg-selection'>
+  <Link href={href} className='flex flex-grow text-white items-center justify-around bg-secondary py-[2px] px-[4px] rounded-sm hover:bg-selection active:bg-selection'>
     <Image src={icon} alt={alt} height={12} width={12} />
     {text}
   </Link>
