@@ -22,6 +22,7 @@ const config: Config = {
       accent: '#ffc107',
       success: '#52C41A',
       danger: '#ED3833',
+      gray: '#E3EAEF',
       // TODO: implemente "warning" & "info" colors.
     },
   },
