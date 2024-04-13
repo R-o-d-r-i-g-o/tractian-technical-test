@@ -1,5 +1,9 @@
 [
-  { "name": "Location 1", "id": "60f56f8a81f788001eca57bf", "parentId": null },
+  {
+    "name": "Location 1",
+    "id": "60f56f8a81f788001eca57bf",
+    "parentId": null
+  },
   {
     "name": "Location 2",
     "id": "60fc7c4595ad84001e95bfbd",

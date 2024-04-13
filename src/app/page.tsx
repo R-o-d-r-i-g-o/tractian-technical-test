@@ -1,9 +1,7 @@
 import { FC } from "react";
 import Image from "next/image";
 
-import ApexAssets from '../../public/mock/apex-unit/assets.json'
-import ApexLocations from '../../public/mock/apex-unit/locations.json'
-
+import Dropdown from './dropdown'
 import Collaborators from '@/components/collaborators'
 
 import { GoDotFill } from "react-icons/go";
@@ -84,8 +82,8 @@ const Home = () => (
           <input type="text" placeholder="Buscar Ativo ou Local" className="py-2 px-3 flex-1 text-sm outline-none" />
           <IoSearchOutline size={16} className="mr-4" />
         </div>
-        <div className="w-full min-h-min">
-
+        <div className="flex flex-col gap-1 w-full min-h-min p-2 pt-3">
+          <Dropdown />
         </div>
       </div>
       <div className="w-full bg-gray-300 border border-border rounded">
