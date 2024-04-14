@@ -5,6 +5,8 @@ import React, { memo, useState, useEffect } from 'react';
 
 import { FaAngleDown, FaAngleRight } from "react-icons/fa6";
 
+import { asset } from '@/store/assets'
+
 import ApexAssets from '../../../public/mock/apex-unit/assets.json'
 import ApexLocations from '../../../public/mock/apex-unit/locations.json'
 
@@ -62,6 +64,7 @@ const DropdownItem = ({ id, name }: DropdownItemProps) => {
     setShowItems(!showItems)
 
     if (showItems) return;
+    asset.setState({ name: "test", parentId: "12312",  id: "123131" })
     setSubitems(getAssociatedLocations(id))
   }
 
