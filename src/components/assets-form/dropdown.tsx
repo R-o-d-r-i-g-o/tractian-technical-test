@@ -12,6 +12,7 @@ const content = ApexLocations // ApexAssets.concat(ApexLocations)
 
 type Props = {
     search: string;
+    onLoaded?: () => void;
 }
 
 const getLocations = (search: string) => {
@@ -27,15 +28,16 @@ const getAssociatedLocations = (id: string) => {
 
   return content.filter(item => {
 
-    return item.parentId == "60fc7c9e86cd05001d22b4d5"
+    return item.parentId == "60fc487b07a5ec001e8cc360"
   })
 }
 
-const Dropdown = ({ search }: Props) => {
+const Dropdown = ({ search, onLoaded }: Props) => {
   const [data, setData] = useState<typeof ApexLocations>([])
 
   useEffect(() => {
     setData(getLocations(search))
+    if (onLoaded) onLoaded()
   }, [])
 
   return (

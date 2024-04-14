@@ -1,32 +1,55 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, ChangeEvent } from 'react'
 
 import Dropdown from './dropdown'
 import { IoSearchOutline } from "react-icons/io5";
 
+import Lottie from 'lottie-react';
 import { useDebounce } from "@uidotdev/usehooks";
+
+import loadingData from '../../../public/animations/loading.json'
 
 const AssetsForm = () => {
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(true)
+
   const defSearch = useDebounce(search, 500);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setLoading(true);
+  };
 
   return (
     <>
       <div className="h-11 border-b border-border flex items-center">
         <input
           type="text"
+          onChange={handleInputChange}
           placeholder="Buscar Ativo ou Local"
-          onChange={e => setSearch(e.target.value)}
           className="py-2 px-3 flex-1 text-sm outline-none"
         />
         <IoSearchOutline size={16} className="mr-4" />
       </div>
-      <div className="flex flex-col gap-1 w-full min-h-min p-2 pt-3">
-        <Dropdown key={defSearch} search={defSearch} />
+      {loading && <Spinner />}
+      <div className={`flex flex-col gap-1 w-full min-h-min p-2 pt-3 ${loading && "hidden"}`}>
+        <Dropdown
+          key={defSearch}
+          search={defSearch}
+          onLoaded={() => setLoading(false)}
+        />
       </div>
     </>
   )
 }
+
+const Spinner = () => {
+  return (
+    <div className="mx-auto mt-6 w-8">
+      <Lottie size={16} animationData={loadingData} />
+    </div>
+  );
+};
 
 export default AssetsForm;
