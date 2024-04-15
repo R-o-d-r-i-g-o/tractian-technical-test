@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React, { memo, useState, useEffect } from 'react';
 
+import { IconType } from 'react-icons';
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa6';
 
 import { asset } from '@/store/assets';
@@ -18,18 +19,18 @@ type Props = {
 };
 
 const getLocations = (search: string) => {
-  search = search?.toLowerCase();
+  search = search?.trim().toLowerCase();
 
   return content.filter(
     (item) =>
-      item.parentId == null && // && item.
+      item.parentId == null &&
       (search === '' || item.name.toLowerCase().includes(search))
   );
 };
 
 const getAssociatedLocations = (id: string) => {
   return content.filter((item) => {
-    return item.parentId == '60fc487b07a5ec001e8cc360';
+    return item.parentId == id;
   });
 };
 
@@ -55,6 +56,16 @@ type DropdownItemProps = {
   name: string;
 };
 
+type FormatIconProps = {
+  size: number;
+  children: IconType;
+};
+
+const FormatIcon = ({ children, size }: FormatIconProps) => {
+  const IconComponent = children;
+  return <IconComponent size={size} />;
+};
+
 const DropdownItem = ({ id, name }: DropdownItemProps) => {
   const [showItems, setShowItems] = useState(false);
   const [subitems, setSubitems] = useState<typeof ApexLocations>([]);
@@ -67,10 +78,8 @@ const DropdownItem = ({ id, name }: DropdownItemProps) => {
     setSubitems(getAssociatedLocations(id));
   };
 
-  const buttonIcon = showItems ? (
-    <FaAngleDown size={12} />
-  ) : (
-    <FaAngleRight size={12} />
+  const buttonIcon = (
+    <FormatIcon size={12}>{showItems ? FaAngleDown : FaAngleRight}</FormatIcon>
   );
 
   return (
