@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { unit } from '@/store/units';
 import { asset } from '@/store/assets';
 
-import AssetsForm from '../components/assets-form';
+import AssetsForm from '@/components/assets-form';
 import Collaborators from '@/components/collaborators';
 import { ContentSkeleton } from '@/components/loading';
 

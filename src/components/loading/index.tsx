@@ -3,8 +3,12 @@ import Lottie from 'lottie-react';
 import loading from '../../../public/animations/loading.json';
 import placeHolder from '../../../public/animations/empty-block.json';
 
-const Spinner = () => (
-  <div className="mx-auto mt-6 w-8">
+type SpinnerProps = {
+  removePadding?: boolean;
+};
+
+const Spinner = ({ removePadding = false }: SpinnerProps) => (
+  <div className={`mx-auto w-8 ${!removePadding && 'mt-6'}`}>
     <Lottie animationData={loading} />
   </div>
 );

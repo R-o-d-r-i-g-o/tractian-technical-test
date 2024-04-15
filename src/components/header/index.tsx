@@ -3,8 +3,17 @@
 import { FC } from 'react';
 import { unit } from '@/store/units';
 
+import { useQuery } from '@tanstack/react-query';
+import { Spinner } from '@/components/loading';
+
 import Image from 'next/image';
-import navOptions from '../../../public/mock/header-options.json';
+
+type Options = {
+  id: string;
+  text: string;
+  icon: string;
+  alt: string;
+};
 
 type NavOption = {
   text: string;
@@ -35,6 +44,11 @@ const NavButton: FC<NavOption> = ({
 const Header = () => {
   const selectedID = unit()?.id;
 
+  const { isLoading, data } = useQuery<Array<Options>>({
+    queryKey: ['repoData'],
+    queryFn: () => fetch('/api/units').then((res) => res.json()),
+  });
+
   return (
     <header className="bg-primary flex items-center justify-between px-4 py-3">
       <Image
@@ -44,16 +58,20 @@ const Header = () => {
         height={14}
       />
       <div className="flex align-middle min-w-min text-xs h-6 gap-[10px]">
-        {navOptions.map((item) => (
-          <NavButton
-            key={item.id}
-            text={item.text}
-            icon={item.icon}
-            alt={item.alt}
-            onSelect={() => unit.setState({ ...item })}
-            selected={selectedID === item.id}
-          />
-        ))}
+        {isLoading ? (
+          <Spinner removePadding />
+        ) : (
+          data?.map((item) => (
+            <NavButton
+              key={item.id}
+              text={item.text}
+              icon={item.icon}
+              alt={item.alt}
+              onSelect={() => unit.setState({ ...item })}
+              selected={selectedID === item.id}
+            />
+          ))
+        )}
       </div>
     </header>
   );

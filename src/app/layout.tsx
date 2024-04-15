@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import './globals.css';
 
+import ContextProvider from '@/contexts';
+
 const inter = Inter({ subsets: ['latin'] });
 
 type Props = Readonly<{
@@ -17,7 +19,9 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Props) => (
   <html lang="br">
     <body className={inter.className}>
-      <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+      <ContextProvider>
+        <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+      </ContextProvider>
     </body>
   </html>
 );
