@@ -1,18 +1,16 @@
-"use client"
+'use client';
 
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent } from 'react';
 
-import Dropdown from './dropdown'
-import { IoSearchOutline } from "react-icons/io5";
+import Dropdown from './dropdown';
+import { Spinner } from '@/components/loading';
 
-import Lottie from 'lottie-react';
-import { useDebounce } from "@uidotdev/usehooks";
-
-import loadingData from '../../../public/animations/loading.json'
+import { useDebounce } from '@uidotdev/usehooks';
+import { IoSearchOutline } from 'react-icons/io5';
 
 const AssetsForm = () => {
-  const [search, setSearch] = useState("")
-  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const defSearch = useDebounce(search, 500);
 
@@ -33,7 +31,11 @@ const AssetsForm = () => {
         <IoSearchOutline size={16} className="mr-4" />
       </div>
       {loading && <Spinner />}
-      <div className={`flex flex-col gap-1 w-full min-h-min p-2 pt-3 ${loading && "hidden"}`}>
+      <div
+        className={`flex flex-col gap-1 w-full min-h-min p-2 pt-3 ${
+          loading && 'hidden'
+        }`}
+      >
         <Dropdown
           key={defSearch}
           search={defSearch}
@@ -41,14 +43,6 @@ const AssetsForm = () => {
         />
       </div>
     </>
-  )
-}
-
-const Spinner = () => {
-  return (
-    <div className="mx-auto mt-6 w-8">
-      <Lottie size={16} animationData={loadingData} />
-    </div>
   );
 };
 
