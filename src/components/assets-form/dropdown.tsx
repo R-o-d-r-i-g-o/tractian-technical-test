@@ -3,10 +3,13 @@
 import Image from 'next/image';
 import React, { memo, useState, useEffect } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
+
 import { IconType } from 'react-icons';
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa6';
 
 import { asset } from '@/store/assets';
+import { unit } from '@/store/units';
 
 import ApexAssets from '../../../public/mock/apex-unit/_assets.json';
 import ApexLocations from '../../../public/mock/apex-unit/_locations.json';
@@ -36,9 +39,17 @@ const getAssociatedLocations = (id: string) => {
 
 const Dropdown = ({ search, onLoaded }: Props) => {
   const [data, setData] = useState<typeof ApexLocations>([]);
+  const unitName = unit((state) => state?.name);
+
+  const handleData = async () => {
+    const res = await fetch(`api/${unitName}/assets?page=2&size=100`);
+
+    const { total, rows } = (await res.json()) as any;
+    setData(rows);
+  };
 
   useEffect(() => {
-    setData(getLocations(search));
+    handleData();
     if (onLoaded) onLoaded();
   }, []);
 
@@ -69,13 +80,18 @@ const FormatIcon = ({ children, size }: FormatIconProps) => {
 const DropdownItem = ({ id, name }: DropdownItemProps) => {
   const [showItems, setShowItems] = useState(false);
   const [subitems, setSubitems] = useState<typeof ApexLocations>([]);
+  const unitName = unit((state) => state?.name);
 
-  const handleShowDetails = () => {
+  const handleShowDetails = async () => {
     setShowItems(!showItems);
 
     if (showItems) return;
     asset.setState({ name: 'test', parentId: '12312', id: '123131' });
-    setSubitems(getAssociatedLocations(id));
+
+    const res = await fetch(`api/${unitName}/assets?page=2&size=100`);
+
+    const { total, rows } = (await res.json()) as any;
+    setSubitems(rows);
   };
 
   const buttonIcon = (
@@ -91,7 +107,7 @@ const DropdownItem = ({ id, name }: DropdownItemProps) => {
       </div>
       {showItems && (
         <div className="min-h-min ml-4">
-          {subitems.map((item) => (
+          {subitems?.map((item) => (
             <DropdownItem key={item.id} {...item} />
           ))}
         </div>

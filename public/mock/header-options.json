@@ -1,18 +1,21 @@
 [
   {
     "id": "6092c8f567679000665ed5d1",
+    "name": "apex",
     "text": "Apex Unit",
     "icon": "/icons/units.svg",
     "alt": "apex-units"
   },
   {
     "id": "6092c8f567679000665ed5d2",
+    "name": "tobias",
     "text": "Tobias Unit",
     "icon": "/icons/units.svg",
     "alt": "tobias-units"
   },
   {
     "id": "6092c8f567679000665ed5d3",
+    "name": "jaguar",
     "text": "jaguar Unit",
     "icon": "/icons/units.svg",
     "alt": "jaguar-units"
