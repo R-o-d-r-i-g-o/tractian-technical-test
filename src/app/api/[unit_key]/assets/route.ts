@@ -33,23 +33,23 @@ const getHeaderCustomNav = async (req: NextRequest, route: Params) => {
 
     const countParams = code != null ? [ code ] : [];
 
-    const [rows, count] = await Promise.all([
+    const [rows] = await Promise.all([
       new Promise<any[]>((resolve, reject) => {
         db!.all(sql, params, (err, rows) => {
           if (err) reject(err);
           else resolve(rows);
         });
       }),
-      new Promise<any>((resolve, reject) => {
-        db!.get(sqlCount, countParams, (err, row) => {
-          if (err) reject(err);
-          else resolve(row);
-        });
-      })
+      // new Promise<any>((resolve, reject) => {
+      //   db!.get(sqlCount, countParams, (err, row) => {
+      //     if (err) reject(err);
+      //     else resolve(row);
+      //   });
+      // })
     ]);
 
     // Note: allow pagination count.
-    const responseBody = { total: count.total , rows };
+    const responseBody = { total: size, rows };
 
     return Response.json(responseBody, { status: 200 });
   } catch (err) {
