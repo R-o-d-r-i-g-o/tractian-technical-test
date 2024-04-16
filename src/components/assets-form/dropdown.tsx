@@ -89,9 +89,9 @@ const DropdownItem = ({ id, name }: DropdownItemProps) => {
     asset.setState({ name: 'test', parentId: '12312', id: '123131' });
 
     const query = new URLSearchParams({
-      page: '1',
-      size: '1',
       code: id,
+      page: '1',
+      size: '50',
     }).toString();
 
     const res = await fetch(`api/${unitName}/assets?${query}`);

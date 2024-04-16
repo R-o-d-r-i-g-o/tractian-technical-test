@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '05:00'
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: '@types/node'
+        versions:
+          - 15.0.0
+      - dependency-name: '@typescript-eslint/parser'
+        versions:
+          - 4.17.0
+      - dependency-name: husky
+        versions:
+          - 5.0.9
+          - 5.1.2
+      - dependency-name: eslint
+        versions:
+          - 7.20.0
+      - dependency-name: next
+        versions:
+          - 10.0.6
