@@ -42,7 +42,7 @@ const Dropdown = ({ search, onLoaded }: Props) => {
   const unitName = unit((state) => state?.name);
 
   const handleData = async () => {
-    const res = await fetch(`api/${unitName}/assets?page=2&size=100`);
+    const res = await fetch(`api/${unitName}/assets?page=1`);
 
     const { total, rows } = (await res.json()) as any;
     setData(rows);
@@ -88,7 +88,7 @@ const DropdownItem = ({ id, name }: DropdownItemProps) => {
     if (showItems) return;
     asset.setState({ name: 'test', parentId: '12312', id: '123131' });
 
-    const res = await fetch(`api/${unitName}/assets?page=2&size=100`);
+    const res = await fetch(`api/${unitName}/assets?page=1`);
 
     const { total, rows } = (await res.json()) as any;
     setSubitems(rows);
