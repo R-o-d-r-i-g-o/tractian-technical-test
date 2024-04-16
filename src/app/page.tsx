@@ -10,11 +10,14 @@ import AssetsForm from '@/components/assets-form';
 import Collaborators from '@/components/collaborators';
 import { ContentSkeleton } from '@/components/loading';
 
+import swal from 'sweetalert2';
+
 import { GoDotFill } from 'react-icons/go';
 
 type Props = {
   lable: string;
   icon: string;
+  onClick?: () => void;
 };
 
 const mockButtons = [
@@ -61,8 +64,11 @@ const mockCollaborators = [
   },
 ];
 
-const Button: FC<Props> = ({ lable, icon }) => (
-  <button className="flex gap-2 items-center font-semibold text-dark_gray text-sm py-2 px-4 border border-border rounded">
+const Button: FC<Props> = ({ lable, icon, onClick }) => (
+  <button
+    onClick={onClick}
+    className="flex gap-2 items-center font-semibold text-dark_gray text-sm py-2 px-4 border border-border rounded"
+  >
     <Image src={icon} alt="{alt}" height={14} width={14} />
     {lable}
   </button>
@@ -71,6 +77,17 @@ const Button: FC<Props> = ({ lable, icon }) => (
 const Home = () => {
   const [unitId, unitName] = unit((state) => [state?.id, state?.text]);
   const storeAsset = asset();
+
+  const handleButtonClick = () =>
+    swal.fire({
+      title: 'O que achou?',
+      text: 'Posso ir para o próximo step?',
+      icon: 'question',
+      showCloseButton: true,
+      confirmButtonText: 'Sim!',
+      showCancelButton: true,
+      cancelButtonText: 'Mais é claro que sim!',
+    });
 
   if (!unitId) return <ContentSkeleton />;
 
@@ -83,7 +100,7 @@ const Home = () => {
         </span>
         <div className="flex gap-2">
           {mockButtons.map((item, i) => (
-            <Button key={i} {...item} />
+            <Button key={i} onClick={handleButtonClick} {...item} />
           ))}
         </div>
       </div>
