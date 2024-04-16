@@ -44,8 +44,8 @@ const Dropdown = ({ search, onLoaded }: Props) => {
   const handleData = async () => {
     const res = await fetch(`api/${unitName}/assets?page=1`);
 
-    const { total, rows } = (await res.json()) as any;
-    setData(rows);
+    const { total, assets } = (await res.json()) as any;
+    setData(assets);
   };
 
   useEffect(() => {
@@ -88,10 +88,17 @@ const DropdownItem = ({ id, name }: DropdownItemProps) => {
     if (showItems) return;
     asset.setState({ name: 'test', parentId: '12312', id: '123131' });
 
-    const res = await fetch(`api/${unitName}/assets?page=1`);
+    const query = new URLSearchParams({
+      page: '1',
+      size: '1',
+      code: id,
+    }).toString();
 
-    const { total, rows } = (await res.json()) as any;
-    setSubitems(rows);
+    const res = await fetch(`api/${unitName}/assets?${query}`);
+
+    const { total, assets } = (await res.json()) as any;
+
+    setSubitems(assets);
   };
 
   const buttonIcon = (

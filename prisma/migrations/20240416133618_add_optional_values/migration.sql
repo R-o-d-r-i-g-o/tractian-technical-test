@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "tb_assets" ALTER COLUMN "locationId" DROP NOT NULL,
+ALTER COLUMN "parentId" DROP NOT NULL,
+ALTER COLUMN "status" DROP NOT NULL,
+ALTER COLUMN "sensorType" DROP NOT NULL;

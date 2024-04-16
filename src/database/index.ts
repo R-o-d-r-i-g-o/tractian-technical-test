@@ -1,25 +1,24 @@
-import sqlite3, { Database } from 'sqlite3';
+import { PrismaClient, asset } from '@prisma/client';
+import { Filters } from './entity'
 
-// Note: allow debuging
-sqlite3.verbose()
+const isProduction =  process.env.NODE_ENV == 'production'
 
-type UnitName = 'apex' | 'jaguar' | 'tobias';
+const prisma = new PrismaClient({
+  log: isProduction ? [] : ['query', 'info', 'warn', 'error']
+});
 
-const formatConnURI = (key: UnitName): string => `database-${key}.db`
+const getAssets = async (f: Filters) => {
+  await prisma.$connect();
+  const assets = await prisma.asset.findMany({
+    skip: (f.page - 1) * f.size,
+    take: f.size,
+    orderBy: [{ name: 'asc' }]
+  })
 
-const instanceSqlite = (collName: UnitName) => {
-  const filePath = formatConnURI(collName)
+  const total = await prisma.asset.count();
 
-  return new sqlite3.Database(
-    filePath,
-    sqlite3.OPEN_READWRITE,
-    (err) => {
-      console.log('ERROR TO CONNECT SQLITE', err)
-    }
-  );
+  await prisma.$disconnect();
+  return { assets, total }
 }
 
-export { instanceSqlite, type UnitName, type Database };
-
-
-
+export { getAssets }
