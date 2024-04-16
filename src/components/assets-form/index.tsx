@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent } from 'react';
 
-import Dropdown from './dropdown';
+import DropdownList from './dropdown-list';
 import { Spinner } from '@/components/loading';
 
 import { useDebounce } from '@uidotdev/usehooks';
@@ -36,7 +36,7 @@ const AssetsForm = () => {
           loading && 'hidden'
         }`}
       >
-        <Dropdown
+        <DropdownList
           key={defSearch}
           search={defSearch}
           onLoaded={() => setLoading(false)}

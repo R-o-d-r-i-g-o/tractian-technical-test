@@ -14,7 +14,7 @@ const getAssets = async (f: Filters) => {
 
   const predicate = {
     unitId: unit ? unit.id : undefined,
-    parentId: f.code.length > 1 ? f.code : null
+    parentId: f.code
   }
 
   const assets = await prisma.asset.findMany({

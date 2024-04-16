@@ -1,6 +1,6 @@
 export type Filters = {
   unitKey: string
-  code: string
+  code: string | null
   page: number
   size: number
 }

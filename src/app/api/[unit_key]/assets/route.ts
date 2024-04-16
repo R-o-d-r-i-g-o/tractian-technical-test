@@ -19,7 +19,7 @@ const getHeaderCustomNav = async (req: NextRequest, route: Params) => {
       page,
       size,
       unitKey: collectionKey,
-      code: code ?? '',
+      code: code,
     })
 
     return Response.json(rows, { status: 200 });
