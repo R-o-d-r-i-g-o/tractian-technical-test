@@ -8,8 +8,8 @@ import { FaAngleDown, FaAngleRight } from 'react-icons/fa6';
 
 import { asset } from '@/store/assets';
 
-import ApexAssets from '../../../public/mock/apex-unit/assets.json';
-import ApexLocations from '../../../public/mock/apex-unit/locations.json';
+import ApexAssets from '../../../public/mock/apex-unit/_assets.json';
+import ApexLocations from '../../../public/mock/apex-unit/_locations.json';
 
 const content = ApexLocations; // ApexAssets.concat(ApexLocations)
 
