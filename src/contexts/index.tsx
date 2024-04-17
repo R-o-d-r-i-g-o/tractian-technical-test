@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactElement, FC } from 'react';
+import { ReactElement, lazy, FC, Suspense } from 'react';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -21,6 +21,12 @@ const queryClient = new QueryClient({
   },
 });
 
+const ReactQueryDevtoolsProduction = lazy(() =>
+  import('@tanstack/react-query-devtools/production').then((d) => ({
+    default: d.ReactQueryDevtools,
+  }))
+);
+
 // TODO: if a day this app gonna be released, remove it degub pieces from production build.
 // Note: to do that use "NODE_ENV" environment variable.
 
@@ -29,6 +35,9 @@ const Provider: FC<Props> = ({ children }) => (
     <ToastContainer />
     {children}
     <ReactQueryDevtools initialIsOpen={false} />
+    <Suspense fallback={<>loading production debug ...</>}>
+      <ReactQueryDevtoolsProduction />
+    </Suspense>
   </QueryClientProvider>
 );
 
