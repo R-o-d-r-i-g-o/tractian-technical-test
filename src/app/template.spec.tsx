@@ -1,11 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import Template from './template';
 
-describe('Template', () => {
-  it('renderiza o componente Template corretamente', () => {
-    // render(<Template>{'Hello world!'}</Template>);
-    // expect(screen.getByRole('heading', { name: /header/i })).toBeDefined();
-    // console.log('teste', expect(screen.getByText(/Hello World/i)));
-    // expect(screen.getByText(/Hello World/i)).toBeUndefined();
+import * as ReactQuery from '@tanstack/react-query';
+
+describe('Template Component Test', () => {
+  const useQueryMock = jest.spyOn(ReactQuery, 'useQuery').mockImplementation();
+
+  it('render component properly', () => {
+    render(<Template>{'Hello world!'}</Template>);
+
+    const templateComp = screen.getByTestId('template-element');
+
+    expect(screen.getByText(/Hello World/i)).toBeDefined();
+    expect(templateComp).toBeDefined();
+  });
+
+  it('render context element properly', () => {
+    expect(useQueryMock).toHaveBeenCalledTimes(1);
   });
 });

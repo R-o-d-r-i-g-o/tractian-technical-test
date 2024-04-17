@@ -1,3 +1,5 @@
+import "jest-canvas-mock";
+
 const { defineProperty } = Object;
 
 Object.defineProperty = function (object, name, meta) {
