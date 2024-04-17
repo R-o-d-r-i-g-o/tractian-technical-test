@@ -2,7 +2,7 @@ import * as t from '../@types';
 
 const _IMAGE_PATHS = Object.freeze({
   LOCATIONS: '/icons/location.svg',
-  COMPONENT: '/icons/component.svg',
+  COMPONENT: '/icons/component.png',
   ASSETS: '/icons/asset.svg',
 });
 
