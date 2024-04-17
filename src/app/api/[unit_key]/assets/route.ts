@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server';
 
-import { getAssets } from '../../../../database'
+import { getAssets, getAssetsBySearch } from '../../../../database'
 
 type Params = {
   params: { unit_key: string }
@@ -13,7 +13,14 @@ const getHeaderCustomNav = async (req: NextRequest, route: Params) => {
   try {
     const page = parseInt(searchParams.get('page') ?? '1');
     const size = parseInt(searchParams.get('size') ?? '50');
+    const term = searchParams.get('search')
     const code = searchParams.get('code')
+
+    if (term) {
+      const { assets } = await getAssetsBySearch(term)
+
+      return Response.json({ assets, total: assets.length }, { status: 200 });
+    }
 
     const rows = await getAssets({
       page,

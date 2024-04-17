@@ -43,4 +43,26 @@ const getAssets = async (f: Filters) => {
   return { assets, total: Number(total) ?? 0 }
 }
 
-export { getAssets }
+const getAssetsBySearch = async (search: string) => {
+  await prisma.$connect();
+
+  const assets = await prisma.$queryRaw<Array<asset>>`
+    WITH RECURSIVE asset_hierarchy AS (
+      SELECT "id", "name", "locationId", "parentId", "status", "sensorType", "type", "unitId"
+      FROM tb_assets
+      WHERE name ILIKE CONCAT('%', ${search}, '%')
+      UNION
+      SELECT a."id", a."name", a."locationId", a."parentId", a."status", a."sensorType", a."type", a."unitId"
+      FROM tb_assets a
+      INNER JOIN asset_hierarchy ah ON ah."parentId" = a.id
+    )
+
+    SELECT ah."id", ah."name", ah."locationId", ah."parentId", ah."status", ah."sensorType", ah."type", ah."unitId"
+    FROM asset_hierarchy ah;
+  `;
+
+  await prisma.$disconnect();
+  return { assets, total: assets.length }
+}
+
+export { getAssets, getAssetsBySearch }
