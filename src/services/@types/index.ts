@@ -1,11 +1,14 @@
 import { asset as assetType } from '@prisma/client';
 
+export type Status = 'alert' | 'operating' | null
+
 export type AssetType = 'location' | 'asset';
 
 export type SensorType = 'vibration' | 'energy' | null;
 
 export type ElementNode = assetType & {
   type: AssetType,
+  status: Status;
   sensorType: SensorType,
 }
 

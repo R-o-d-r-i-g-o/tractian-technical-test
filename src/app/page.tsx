@@ -21,7 +21,11 @@ const Home = () => {
           <AssetsForm />
         </div>
         <div className="w-full bg-gray-300 border border-border rounded">
-          {!home.id ? <ContentSkeleton /> : <DetailsScreen />}
+          {!home.selectedAsset ? (
+            <ContentSkeleton />
+          ) : (
+            <DetailsScreen {...home.selectedAsset} />
+          )}
         </div>
       </div>
     </>

@@ -4,7 +4,7 @@ import { ReactElement, lazy, FC, Suspense } from 'react';
 
 import { ToastContainer } from 'react-toastify';
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 type Props = {
@@ -28,14 +28,15 @@ const ReactQueryDevtoolsProduction = lazy(() =>
 );
 
 // TODO: if a day this app gonna be released, remove it degub pieces from production build.
-// Note: to do that use "NODE_ENV" environment variable.
+
+// Note: let only "ReactQueryDevtools" component that works in "development" environment only.
 
 const Provider: FC<Props> = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     <ToastContainer />
     {children}
-    <ReactQueryDevtools initialIsOpen={false} />
-    <Suspense fallback={<>loading production debug ...</>}>
+    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+    <Suspense>
       <ReactQueryDevtoolsProduction />
     </Suspense>
   </QueryClientProvider>

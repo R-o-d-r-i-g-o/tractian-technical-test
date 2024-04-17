@@ -10,13 +10,14 @@ import useToast from '@/hooks/useToast';
 
 import * as t from '../@types'
 
-const useDropdownItem = ({ sensorType, id, name }: t.DropdownItemHookProps) => {
+const useDropdownItem = ({ sensorType, status, id, name }: t.DropdownItemHookProps) => {
   const { failure } = useToast();
+
+  const [disableSubitens] = useState(!!sensorType)
   const [showItems, setShowItems] = useState(false);
 
   // Note: a way to remove obeserver
   const unitName = unit.getState()?.name ?? '';
-  const disableSubitens = !sensorType;
 
   const query = useQuery({
     enabled: false,
@@ -29,18 +30,20 @@ const useDropdownItem = ({ sensorType, id, name }: t.DropdownItemHookProps) => {
   }
 
   const handleShowDetails = async () => {
-    asset.setState({ name, id, parentId: '12312' });
-  };
+    const invertShowItems = !showItems
 
-  const showSubItens = async () => {
-    setShowItems(!showItems);
+    if (disableSubitens) {
+      asset.setState({ name, id, status });
+      return
+    }
 
-    if (!showItems) return;
+    setShowItems(invertShowItems);
+
+    if (!invertShowItems) return;
     await query.refetch();
   };
 
   return {
-    showSubItens,
     handleShowDetails,
     unitName,
     showItems,

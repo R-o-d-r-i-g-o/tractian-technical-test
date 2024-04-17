@@ -5,9 +5,9 @@ import swal from 'sweetalert2';
 
 const useMainPage = () => {
   const unitId = unit((state) => state?.id);
-  const storeAsset = asset();
+  const selectedAsset = asset();
 
-  return { ...storeAsset, unitId}
+  return { selectedAsset, unitId}
 }
 
 const useButtonRange = () => {
