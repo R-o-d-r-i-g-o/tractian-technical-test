@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as t from './@types'
 
-const _60_SECS = 10 * 60;
+const _60_SECS = 1000 * 60;
 
 const api = axios.create({
   timeout: _60_SECS,
