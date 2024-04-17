@@ -1,37 +1,39 @@
 'use client';
 
-import React, { memo, useState, useEffect, FC } from 'react';
+import { memo, useEffect, FC } from 'react';
 
-import { unit } from '@/store/units';
+import { useQuery } from '@tanstack/react-query';
+
 import DropdownItem from './dropdown-item';
+import { unit } from '@/store/units';
+
+import { getPaginatedAssets } from '@/services';
 
 import * as t from './@types';
 
 const Dropdown: FC<t.DropdownListProps> = ({ search, onLoaded }) => {
-  const [data, setData] = useState<t.ElementNode[]>([]);
-  const unitName = unit((state) => state?.name);
+  const unitName = unit((state) => state?.name) ?? '';
 
-  const handleData = async () => {
-    const res = await fetch(`api/${unitName}/assets?page=1`);
-
-    const { total, assets } = (await res.json()) as any;
-    setData(assets);
-  };
+  const { isLoading, data, refetch } = useQuery<t.PaginatedAssets | null>({
+    enabled: false,
+    queryKey: ['dropdown-list'],
+    queryFn: () => getPaginatedAssets({ unitName, search }),
+  });
 
   useEffect(() => {
+    const handleData = async () => {
+      await refetch();
+
+      if (!isLoading && onLoaded) onLoaded();
+    };
+
     handleData();
-    if (onLoaded) onLoaded();
   }, [unitName]);
 
   return (
     <>
-      {data?.map((item) => (
-        <DropdownItem
-          key={item.id}
-          {...item}
-          sensorType={item.sensorType as t.SensorType}
-          type={item.type as t.AssetType}
-        />
+      {data?.assets.map((item) => (
+        <DropdownItem key={item.id} {...item} />
       ))}
     </>
   );

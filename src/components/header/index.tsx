@@ -1,19 +1,14 @@
 'use client';
 
 import { FC } from 'react';
+
+import { getAvaiableUnits } from '@/services';
 import { unit } from '@/store/units';
 
 import { useQuery } from '@tanstack/react-query';
 import { Spinner } from '@/components/loading';
 
 import Image from 'next/image';
-
-type Options = {
-  id: string;
-  text: string;
-  icon: string;
-  alt: string;
-};
 
 type NavOption = {
   text: string;
@@ -44,9 +39,9 @@ const NavButton: FC<NavOption> = ({
 const Header = () => {
   const selectedID = unit()?.id;
 
-  const { isLoading, data } = useQuery<Array<Options>>({
+  const { isLoading, data } = useQuery({
     queryKey: ['repoData'],
-    queryFn: () => fetch('/api/units').then((res) => res.json()),
+    queryFn: () => getAvaiableUnits(),
   });
 
   return (

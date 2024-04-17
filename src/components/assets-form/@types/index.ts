@@ -24,8 +24,13 @@ export type FormatIconProps = {
 };
 
 export type ElementNode = assetType & {
-    sensorType: SensorType,
-    type: AssetType,
+  type: AssetType,
+  sensorType: SensorType,
+}
+
+export type PaginatedAssets = {
+  total: number;
+  assets: ElementNode[];
 }
 
 export { type IconType };
