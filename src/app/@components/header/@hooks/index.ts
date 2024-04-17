@@ -10,7 +10,7 @@ const useHeaderOption = () => {
 
   const queryProps = useQuery({
     queryKey: ['repoData'],
-    queryFn: () => getAvaiableUnits(),
+    queryFn: async () => await getAvaiableUnits(),
   });
 
   return { ...queryProps, selectedID, setState: unit.setState };

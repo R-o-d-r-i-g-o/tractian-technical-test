@@ -33,4 +33,7 @@ export type PaginatedAssets = {
   assets: ElementNode[];
 }
 
+export type DropdownItemHookProps =
+  Omit<DropdownItemProps, 'type'>
+
 export { type IconType };

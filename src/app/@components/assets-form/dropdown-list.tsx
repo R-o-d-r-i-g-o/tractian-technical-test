@@ -1,38 +1,18 @@
 'use client';
 
-import { memo, useEffect, FC } from 'react';
-
-import { useQuery } from '@tanstack/react-query';
+import { memo, FC } from 'react';
 
 import DropdownItem from './dropdown-item';
-import { unit } from '@/store/units';
-
-import { getPaginatedAssets } from '@/services';
-
 import * as t from './@types';
 
-const Dropdown: FC<t.DropdownListProps> = ({ search, onLoaded }) => {
-  const unitName = unit((state) => state?.name) ?? '';
+import { useDropdownList } from './@hooks';
 
-  const { isLoading, data, refetch } = useQuery<t.PaginatedAssets | null>({
-    enabled: false,
-    queryKey: ['dropdown-list'],
-    queryFn: () => getPaginatedAssets({ unitName, search }),
-  });
-
-  useEffect(() => {
-    const handleData = async () => {
-      await refetch();
-
-      if (!isLoading && onLoaded) onLoaded();
-    };
-
-    handleData();
-  }, [unitName]);
+const Dropdown: FC<t.DropdownListProps> = (props) => {
+  const list = useDropdownList(props);
 
   return (
     <>
-      {data?.assets.map((item) => (
+      {list.data?.assets.map((item) => (
         <DropdownItem key={item.id} {...item} />
       ))}
     </>
