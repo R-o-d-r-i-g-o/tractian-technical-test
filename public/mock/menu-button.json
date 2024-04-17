@@ -1,0 +1,10 @@
+[
+  {
+    "lable": "Sensor de Energia",
+    "icon": "/icons/ray.svg"
+  },
+  {
+    "lable": "Crítico",
+    "icon": "/icons/info.svg"
+  }
+]

@@ -1,14 +1,10 @@
 'use client';
 
 import { FC } from 'react';
-
-import { getAvaiableUnits } from '@/services';
-import { unit } from '@/store/units';
-
-import { useQuery } from '@tanstack/react-query';
 import { Spinner } from '@/components/loading';
 
 import Image from 'next/image';
+import { useHeaderOption } from './@hooks';
 
 type NavOption = {
   text: string;
@@ -37,12 +33,7 @@ const NavButton: FC<NavOption> = ({
 );
 
 const Header = () => {
-  const selectedID = unit()?.id;
-
-  const { isLoading, data } = useQuery({
-    queryKey: ['repoData'],
-    queryFn: () => getAvaiableUnits(),
-  });
+  const header = useHeaderOption();
 
   return (
     <header className="bg-primary flex items-center justify-between px-4 py-3">
@@ -53,17 +44,17 @@ const Header = () => {
         height={14}
       />
       <div className="flex align-middle min-w-min text-xs h-6 gap-[10px]">
-        {isLoading ? (
+        {header.isLoading ? (
           <Spinner removePadding />
         ) : (
-          data?.map((item) => (
+          header.data?.map((item) => (
             <NavButton
               key={item.id}
               text={item.text}
               icon={item.icon}
               alt={item.alt}
-              onSelect={() => unit.setState({ ...item })}
-              selected={selectedID === item.id}
+              onSelect={() => header.setState({ ...item })}
+              selected={header.selectedID === item.id}
             />
           ))
         )}
