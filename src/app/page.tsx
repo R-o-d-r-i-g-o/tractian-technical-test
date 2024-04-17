@@ -105,7 +105,7 @@ const Home = () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row min-h-min md:h-[504px] gap-2 text-sm text-primary border-collapse">
-        <div className="w-4/6 border border-border rounded overflow-y-auto">
+        <div className="w-full md:w-4/6 border border-border rounded overflow-y-auto">
           <AssetsForm />
         </div>
         <div className="w-full bg-gray-300 border border-border rounded">

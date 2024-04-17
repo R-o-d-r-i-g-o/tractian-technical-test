@@ -7,7 +7,15 @@ type Props = {
   children: ReactElement;
 };
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      retryDelay: 4000,
+      staleTime: 60 * 60,
+    },
+  },
+});
 
 const Provider: FC<Props> = ({ children }) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

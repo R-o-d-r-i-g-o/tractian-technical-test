@@ -5,6 +5,9 @@ import React, { useState } from 'react';
 
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa6';
 
+import { useQuery } from '@tanstack/react-query';
+import { getPaginatedAssets } from '@/services';
+
 import { unit } from '@/store/units';
 import { asset } from '@/store/assets';
 
@@ -13,28 +16,26 @@ import { handleIconDisplay, FormatIcon } from './@utils';
 
 const DropdownItem = ({ id, name, sensorType, type }: t.DropdownItemProps) => {
   const [showItems, setShowItems] = useState(false);
-  const [subitems, setSubitems] = useState<t.ElementNode[]>([]);
 
   // Note: a way to remove obeserver
-  const unitName = unit.getState()?.name;
+  const unitName = unit.getState()?.name ?? '';
+  const disableSubitens = !sensorType;
+
+  const { data: subitems, refetch } = useQuery({
+    enabled: false,
+    queryKey: ['dropdown-list', id],
+    queryFn: () => getPaginatedAssets({ unitName, code: id }),
+  });
 
   const handleShowDetails = async () => {
+    asset.setState({ name, id, parentId: '12312' });
+  };
+
+  const showSubItens = async () => {
     setShowItems(!showItems);
 
-    if (showItems) return;
-    asset.setState({ name: 'test', parentId: '12312', id: '123131' });
-
-    const query = new URLSearchParams({
-      code: id,
-      page: '1',
-      size: '50',
-    }).toString();
-
-    const res = await fetch(`api/${unitName}/assets?${query}`);
-
-    const { total, assets } = (await res.json()) as any;
-
-    setSubitems(assets);
+    if (!showItems) return;
+    await refetch();
   };
 
   const buttonIcon = (
@@ -42,9 +43,12 @@ const DropdownItem = ({ id, name, sensorType, type }: t.DropdownItemProps) => {
   );
 
   return (
-    <div className="cursor-pointer text-sm">
-      <div onClick={handleShowDetails} className="flex gap-2 items-center">
-        {buttonIcon}
+    <div className={`cursor-pointer text-sm ${disableSubitens ? '' : 'ml-5'}`}>
+      <div
+        onClick={!disableSubitens ? handleShowDetails : showSubItens}
+        className="flex gap-2 items-center"
+      >
+        {disableSubitens && buttonIcon}
         <Image
           src={handleIconDisplay(type, sensorType) || ''}
           alt={`${name}-image`}
@@ -55,13 +59,8 @@ const DropdownItem = ({ id, name, sensorType, type }: t.DropdownItemProps) => {
       </div>
       {showItems && (
         <div className="min-h-min ml-5">
-          {subitems?.map((item) => (
-            <DropdownItem
-              key={item.id}
-              {...item}
-              sensorType={item.sensorType}
-              type={item.type}
-            />
+          {subitems?.assets.map((item) => (
+            <DropdownItem key={item.id} {...item} />
           ))}
         </div>
       )}
