@@ -12,7 +12,7 @@ const AssetsForm = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const defSearch = useDebounce(search, 500);
+  const defSearch = useDebounce(search, 600);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);

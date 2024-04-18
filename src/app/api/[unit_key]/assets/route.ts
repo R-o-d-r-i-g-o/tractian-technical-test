@@ -17,7 +17,7 @@ const getHeaderCustomNav = async (req: NextRequest, route: Params) => {
     const code = searchParams.get('code')
 
     if (term) {
-      const { assets } = await getAssetsBySearch(term)
+      const { assets } = await getAssetsBySearch(term, collectionKey)
 
       return Response.json({ assets, total: assets.length }, { status: 200 });
     }

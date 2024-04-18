@@ -15,9 +15,10 @@ const DropdownItem = ({
   name,
   sensorType,
   status,
+  shouldListAll,
   type,
 }: t.DropdownItemProps) => {
-  const item = useDropdownItem({ name, id, status, sensorType });
+  const item = useDropdownItem({ name, id, status, shouldListAll, sensorType });
 
   const buttonIcon = (
     <FormatIcon size={12}>
@@ -42,8 +43,12 @@ const DropdownItem = ({
       </div>
       {item.showItems && (
         <div className="min-h-min ml-5">
-          {item.query.data?.assets.map((item) => (
-            <DropdownItem key={item.id} {...item} />
+          {item.query.data?.assets?.map((item) => (
+            <DropdownItem
+              shouldListAll={shouldListAll}
+              key={item.id}
+              {...item}
+            />
           ))}
         </div>
       )}

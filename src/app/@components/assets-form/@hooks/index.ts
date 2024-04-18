@@ -2,6 +2,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPaginatedAssets } from '@/services';
 
+import { PaginationFilters, PaginatedAssets } from '@/services/@types';
+
 import { unit } from '@/store/units';
 import { asset } from '@/store/assets';
 import { useEffect, useState } from 'react';
@@ -10,27 +12,35 @@ import useToast from '@/hooks/useToast';
 
 import * as t from '../@types'
 
-const useDropdownItem = ({ sensorType, status, id, name }: t.DropdownItemHookProps) => {
-  const { failure, warning } = useToast();
+let searchedChildren: t.ElementNode[] | null = null;
+
+const handleListItems = async (shouldListAll: boolean, filters: PaginationFilters): Promise<PaginatedAssets> => {
+  if (shouldListAll) {
+    const items = (searchedChildren ?? []).filter(item => item.locationId == filters.code || item.parentId == filters.code)
+
+    return { assets: items, total: items.length }
+  }
+
+  return await getPaginatedAssets(filters)
+}
+
+const useDropdownItem = ({ sensorType, status, id, name, shouldListAll }: t.DropdownItemHookProps) => {
+  const { failure } = useToast();
 
   const [disableSubitens] = useState(!!sensorType)
-  const [showItems, setShowItems] = useState(false);
+  const [showItems, setShowItems] = useState(() => shouldListAll || false);
 
   // Note: a way to remove obeserver
   const unitName = unit.getState()?.name ?? '';
 
   const query = useQuery({
-    enabled: false,
+    enabled: shouldListAll,
     queryKey: ['dropdown-list', id],
-    queryFn: async () => await getPaginatedAssets({ unitName, code: id }),
+    queryFn: async () => await handleListItems(shouldListAll, { unitName, code: id }),
   });
 
   if (query.isError || query.error) {
     failure(query.error?.toString() ?? 'Erro ao listar os ativos');
-  }
-
-  if (query.data?.assets && query.data?.assets.length < 1) {
-    warning('Esse elemento não possúi itens vinculados')
   }
 
   const handleShowDetails = async () => {
@@ -59,17 +69,24 @@ const useDropdownItem = ({ sensorType, status, id, name }: t.DropdownItemHookPro
 
 const useDropdownList = ({ search, onLoaded }: t.DropdownListProps) => {
   const { failure } = useToast();
-  const unitName = unit((state) => state?.name) ?? '';
+
+  const unitName = unit((state) => state!.name);
+  const shouldListAll = !!search
 
   const { isLoading, data, isError, error, refetch } =
     useQuery<t.PaginatedAssets | null>({
       enabled: false,
       queryKey: ['dropdown-list'],
       queryFn: async () => await getPaginatedAssets({ unitName, search }),
+      gcTime: Infinity
     });
 
-  if (isError || error) {
-    failure(error?.toString() ?? 'Erro ao listar os ativos');
+  if (isError || error) failure(error.toString());
+
+  if (shouldListAll && data) {
+    searchedChildren = data.assets
+
+    data.assets = data.assets.filter(item => item.parentId == null)
   }
 
   useEffect(() => {
@@ -82,7 +99,11 @@ const useDropdownList = ({ search, onLoaded }: t.DropdownListProps) => {
     handleData();
   }, [unitName]);
 
-  return { data }
+  return { data, shouldListAll }
 }
 
-export { useDropdownItem, useDropdownList };
+export {
+  useDropdownList,
+  useDropdownItem,
+  searchedChildren,
+};

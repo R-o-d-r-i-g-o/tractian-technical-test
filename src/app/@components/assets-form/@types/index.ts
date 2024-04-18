@@ -18,6 +18,7 @@ export type DropdownItemProps = {
   name: string;
   status: Status;
   sensorType: SensorType;
+  shouldListAll: boolean;
   type: AssetType;
 };
 
