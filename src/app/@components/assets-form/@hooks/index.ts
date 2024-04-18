@@ -96,7 +96,7 @@ const useDropdownList = ({ search, onLoaded }: t.DropdownListProps) => {
     shouldListAll,
     data: {
       ...data,
-      assets: data?.assets?.filter(item => item.parentId == null)
+      assets: data?.assets?.filter(item => item.parentId == null || (item.type === 'location' && (item.parentId == null || item.locationId == null)))
     },
   }
 }
