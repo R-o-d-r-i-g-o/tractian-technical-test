@@ -27,8 +27,8 @@ const getAssets = async (f: Filters) => {
     FETCH NEXT ${f.size} ROWS ONLY
   `;
 
-  const total = await prisma.$queryRaw<bigint | null>`
-    SELECT COUNT(1)
+  const count = await prisma.$queryRaw<{ total?: number }>`
+    SELECT CAST(COUNT(1) AS INTEGER) AS total
     FROM tb_assets a
     WHERE a."unitId" = ${unit!.id}
     AND (
@@ -40,7 +40,7 @@ const getAssets = async (f: Filters) => {
   `;
 
   await prisma.$disconnect();
-  return { assets, total: Number(total) ?? 0 }
+  return { assets, total: count.total ?? 0 }
 }
 
 const getAssetsBySearch = async (search: string) => {

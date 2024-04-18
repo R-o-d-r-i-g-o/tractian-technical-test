@@ -11,7 +11,7 @@ import useToast from '@/hooks/useToast';
 import * as t from '../@types'
 
 const useDropdownItem = ({ sensorType, status, id, name }: t.DropdownItemHookProps) => {
-  const { failure } = useToast();
+  const { failure, warning } = useToast();
 
   const [disableSubitens] = useState(!!sensorType)
   const [showItems, setShowItems] = useState(false);
@@ -27,6 +27,10 @@ const useDropdownItem = ({ sensorType, status, id, name }: t.DropdownItemHookPro
 
   if (query.isError || query.error) {
     failure(query.error?.toString() ?? 'Erro ao listar os ativos');
+  }
+
+  if (query.data?.assets && query.data?.assets.length < 1) {
+    warning("Esse elemento não possúi itens vinculados")
   }
 
   const handleShowDetails = async () => {
