@@ -1,5 +1,6 @@
-
 import { useQuery } from '@tanstack/react-query';
+
+// TODO: refatorar depois essa parte de searchedChildren, basicamente foi um "work-around" para economia de tempo.
 import { getPaginatedAssets, searchedChildren } from '@/services';
 
 import { PaginationFilters, PaginatedAssets } from '@/services/@types';
@@ -91,7 +92,13 @@ const useDropdownList = ({ search, onLoaded }: t.DropdownListProps) => {
     handleData();
   }, [unitName]);
 
-  return { data, shouldListAll }
+  return {
+    shouldListAll,
+    data: {
+      ...data,
+      assets: data?.assets?.filter(item => item.parentId == null)
+    },
+  }
 }
 
 export {
