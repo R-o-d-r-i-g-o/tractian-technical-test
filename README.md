@@ -45,6 +45,8 @@ link do serviço rodando em ambiente remoto: https://tractian-technical-test.ver
 
 - Não ter implementado mais casos de teste: Nesse ponto o tempo foi um quesito que se mostrou o maior desafio, pois ao consiliar esse projeto como minha rotina, tive que dar enfaze na entrega das funcionalidade de maior valor da plataforma nesse primeiro momento.
 
+- Mock de dados com Chaves primárias únicas: Por conta disso, muitas queries de valores no campo input não serão trasidas corretamente. Digo isso pois tiver que usar uma função para geração automática de guid do próprio POSTGRES para lidar com a constrant de chave (PK).
+
 # Pontos de melhorar (review pessoal)
 
 - Poderia ter sido usadas melhores práticas de clean code. A questão da componentização também poderia ter sido um pouco mais trabalhada principalmente por conta da existencia de muitas diretivas de "use client" no projeto usadas.
@@ -53,5 +55,9 @@ link do serviço rodando em ambiente remoto: https://tractian-technical-test.ver
 
 - Organização dos dados dentro do Banco de Dados: Ao menos a nomenclatura e tipagens mais específicas poderiam ter sido usadas nesse momento.
 
-- Acredito ainda ter usado bastante da ferramenta zustand o que, de certa forma, foi ruin no sentido de existirem muitos Wrapers para uso 
+- Acredito ainda ter usado bastante da ferramenta zustand o que, de certa forma, foi ruin no sentido de existirem muitos Wrapers na tentativa de evitar o uso de diretivas no lado do cliente.
+
+- Ainda voltado à tratativa de dados, poderia ter sido usado um auto relacionamento da tabela no banco "tb_assets" da sua PK para as colunas "locationId" e "parentId".
+
+- A chamada de rotas as vezes desnecessárias, sem uma melhorar no sistema de cacheamento como um todo.
 
