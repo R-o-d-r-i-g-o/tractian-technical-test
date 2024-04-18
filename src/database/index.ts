@@ -18,8 +18,8 @@ const getAssets = async (f: Filters) => {
     WHERE a."unitId" = ${unit!.id}
     AND (
       CASE
-        WHEN COALESCE(${f.code}, '') <> '' THEN a."parentId" = ${f.code}
-        ELSE a."parentId" IS NULL
+        WHEN COALESCE(${f.code}, '') <> '' THEN a."parentId" = ${f.code} OR a."locationId" = ${f.code}
+        ELSE a."parentId" IS NULL AND a."locationId" IS NULL
       END
     )
     ORDER BY a."type" DESC
@@ -33,8 +33,8 @@ const getAssets = async (f: Filters) => {
     WHERE a."unitId" = ${unit!.id}
     AND (
       CASE
-        WHEN COALESCE(${f.code}, '') <> '' THEN a."parentId" = ${f.code}
-        ELSE a."parentId" IS NULL
+        WHEN COALESCE(${f.code}, '') <> '' THEN a."parentId" = ${f.code} OR a."locationId" = ${f.code}
+        ELSE a."parentId" IS NULL OR a."locationId" IS NULL
       END
     )
   `;
@@ -53,10 +53,12 @@ const getAssetsBySearch = async (search: string, unitKey: string) => {
       FROM tb_assets
       WHERE "unitId" = ${unit!.id}
         AND "name" ILIKE CONCAT('%', ${search}, '%')
-      UNION
+
+      UNION All
+
       SELECT a."id", a."name", a."locationId", a."parentId", a."status", a."sensorType", a."type", a."unitId"
-      FROM tb_assets a
-      INNER JOIN asset_hierarchy ah ON ah."parentId" = a.id
+      FROM asset_hierarchy a
+      INNER JOIN tb_assets ah ON (ah."parentId" = a.id OR ah."locationId" = a.id)
     )
 
     SELECT ah."id", ah."name", ah."locationId", ah."parentId", ah."status", ah."sensorType", ah."type", ah."unitId"

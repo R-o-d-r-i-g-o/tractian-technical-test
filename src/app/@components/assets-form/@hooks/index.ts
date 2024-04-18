@@ -78,7 +78,6 @@ const useDropdownList = ({ search, onLoaded }: t.DropdownListProps) => {
       enabled: false,
       queryKey: ['dropdown-list'],
       queryFn: async () => await getPaginatedAssets({ unitName, search }),
-      gcTime: Infinity
     });
 
   if (isError || error) failure(error.toString());
