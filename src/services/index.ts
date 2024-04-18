@@ -8,12 +8,16 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' }
 });
 
+let searchedChildren: t.ElementNode[] | null = null;
+
 // TODO: add an anti-corruption layer when its finished.
 
 const getPaginatedAssets = async (filters: t.PaginationFilters) => {
   const { data } = await api.get<t.PaginatedAssets>(`api/${filters.unitName}/assets`, {
     params: filters,
   })
+
+  searchedChildren = data?.assets ?? []
   return data
 }
 
@@ -22,6 +26,6 @@ const getAvaiableUnits = async () => {
   return data
 }
 
-export { getPaginatedAssets, getAvaiableUnits }
+export { getPaginatedAssets, getAvaiableUnits, searchedChildren }
 
 

@@ -14,7 +14,7 @@ const Dropdown: FC<t.DropdownListProps> = (props) => {
 
   return (
     <>
-      {list.data?.assets.map((item) => (
+      {list.data?.assets?.map((item) => (
         <DropdownItem
           shouldListAll={list.shouldListAll}
           key={item.id}

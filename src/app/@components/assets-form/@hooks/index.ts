@@ -1,6 +1,6 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { getPaginatedAssets } from '@/services';
+import { getPaginatedAssets, searchedChildren } from '@/services';
 
 import { PaginationFilters, PaginatedAssets } from '@/services/@types';
 
@@ -12,7 +12,6 @@ import useToast from '@/hooks/useToast';
 
 import * as t from '../@types'
 
-let searchedChildren: t.ElementNode[] | null = null;
 
 const handleListItems = async (shouldListAll: boolean, filters: PaginationFilters): Promise<PaginatedAssets> => {
   if (shouldListAll) {
@@ -81,12 +80,6 @@ const useDropdownList = ({ search, onLoaded }: t.DropdownListProps) => {
     });
 
   if (isError || error) failure(error.toString());
-
-  if (shouldListAll && data) {
-    searchedChildren = data.assets
-
-    data.assets = data.assets.filter(item => item.parentId == null)
-  }
 
   useEffect(() => {
     const handleData = async () => {
