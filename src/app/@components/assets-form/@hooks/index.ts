@@ -30,7 +30,7 @@ const useDropdownItem = ({ sensorType, status, id, name }: t.DropdownItemHookPro
   }
 
   if (query.data?.assets && query.data?.assets.length < 1) {
-    warning("Esse elemento não possúi itens vinculados")
+    warning('Esse elemento não possúi itens vinculados')
   }
 
   const handleShowDetails = async () => {
