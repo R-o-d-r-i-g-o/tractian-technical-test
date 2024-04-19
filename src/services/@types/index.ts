@@ -1,4 +1,5 @@
 import { asset as assetType } from '@prisma/client';
+import { StorageValue } from 'axios-cache-interceptor';
 
 export type Status = 'alert' | 'operating' | null
 
@@ -31,3 +32,7 @@ export type UnitList = Array<{
   id: string;
   alt: string;
 }>;
+
+export type CacheStorage = {
+  [key: string]: StorageValue;
+}

@@ -1,5 +1,3 @@
-'use client';
-
 import { getAvaiableUnits } from '@/services';
 import { unit } from '@/store/units';
 
