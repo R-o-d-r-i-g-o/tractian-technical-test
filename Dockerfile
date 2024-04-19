@@ -12,6 +12,10 @@ RUN yarn build
 
 FROM node:20.10-alpine AS publish
 
+LABEL maintainer="rodrigo marques ribeiro <rodrigomarqribeiro@gmail.com>"
+LABEL version="1.0"
+LABEL description="Tractian front end test"
+
 WORKDIR /app
 
 COPY --from=build /app/.next ./.next
