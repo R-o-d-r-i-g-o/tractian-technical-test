@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] });
 
 type Props = Readonly<{
   children: React.ReactNode;
+  components: undefined;
+  hooks: undefined;
+  types: undefined;
 }>;
 
 export const metadata: Metadata = {

@@ -1,39 +1,17 @@
 'use client';
 
-import { FC } from 'react';
-import { Spinner } from '@/components/loading';
-
 import Image from 'next/image';
-import { useHeaderOption } from './@hooks';
 
-type NavOption = {
-  text: string;
-  icon: string;
-  alt: string;
-  onSelect: () => void;
-  selected: boolean;
-};
+import * as t from './@types';
 
-const NavButton: FC<NavOption> = ({
-  text,
-  icon,
-  alt,
-  onSelect,
-  selected = false,
-}) => (
-  <button
-    onClick={onSelect}
-    className={`flex flex-grow gap-1 text-white items-center justify-around ${
-      selected ? 'bg-selection' : 'bg-secondary'
-    } py-1 px-2 rounded-sm hover:bg-selection active:bg-selection`}
-  >
-    <Image src={icon} alt={alt} height={12} width={12} />
-    {text}
-  </button>
-);
+import { Actions } from './action';
+import { useHeader } from './@hooks';
 
-const Header = () => {
-  const header = useHeaderOption();
+// TODO: when its not in preview option anymore, use "Async" server component here then remove "use-client".
+
+const Header = ({ children }: { children: t.ActionProps }) => {
+  const header = useHeader();
+  const ChildComponent = children;
 
   return (
     <header className="bg-primary flex items-center justify-between px-4 py-3">
@@ -43,24 +21,9 @@ const Header = () => {
         width={102.95}
         height={14}
       />
-      <div className="flex align-middle min-w-min text-xs h-6 gap-[10px]">
-        {header.isLoading ? (
-          <Spinner removePadding />
-        ) : (
-          header.data?.map((item) => (
-            <NavButton
-              key={item.id}
-              text={item.text}
-              icon={item.icon}
-              alt={item.alt}
-              onSelect={() => header.setState({ ...item })}
-              selected={header.selectedID === item.id}
-            />
-          ))
-        )}
-      </div>
+      <ChildComponent menuOptions={header?.data} />
     </header>
   );
 };
 
-export default Header;
+export { Header as Component, Actions };

@@ -12,6 +12,7 @@ const _15_MINS = 1000 * 60 * 15;
 
 const api = axios.create({
   timeout: _60_SECS,
+  baseURL: process.env.BASE_PATH,
   headers: { 'Content-Type': 'application/json' }
 });
 

@@ -3,15 +3,19 @@ import { unit } from '@/store/units';
 
 import { useQuery } from '@tanstack/react-query';
 
-const useHeaderOption = () => {
-  const selectedID = unit()?.id;
-
+const useHeader = () => {
   const queryProps = useQuery({
     queryKey: ['repoData'],
     queryFn: async () => await getAvaiableUnits(),
   });
 
-  return { ...queryProps, selectedID, setState: unit.setState };
+  return queryProps
+}
+
+const useHeaderOption = () => {
+  const selectedID = unit()?.id;
+
+  return { selectedID, setState: unit.setState };
 };
 
-export { useHeaderOption }
+export { useHeader, useHeaderOption }

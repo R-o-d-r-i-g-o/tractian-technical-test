@@ -7,11 +7,15 @@ const Button: FC<t.ButtonProps> = ({
   displayText,
   leftIcon,
   rightIcon,
+  className,
   ...rest
 }) => (
   <button
     {...rest}
-    className="flex gap-2 items-center font-semibold text-dark_gray text-sm py-2 px-4 border border-border rounded"
+    className={
+      className ??
+      'flex gap-2 items-center font-semibold text-dark_gray text-sm py-2 px-4 border border-border rounded'
+    }
   >
     {leftIcon}
     {displayText}
